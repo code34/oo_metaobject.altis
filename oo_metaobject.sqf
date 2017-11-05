@@ -33,6 +33,7 @@
 		PRIVATE VARIABLE("code","payload");
 
 		PUBLIC FUNCTION("object","constructor") { 
+			DEBUG(#, "OO_MARKER::constructor")
 			MEMBER("setObject", _this);
 			MEMBER("value", 0);
 			MEMBER("timetolive", -1);
@@ -44,84 +45,32 @@
 			MEMBER("payload", {});
 		};
 
-		PUBLIC FUNCTION("","getObject") {
-			MEMBER("object", nil);
-		};
-
-		PUBLIC FUNCTION("","getName") {
-			MEMBER("name", nil);
-		};
-
-		PUBLIC FUNCTION("","getTimeToLive") {
-			MEMBER("timetolive", nil);
-		};
-
-		PUBLIC FUNCTION("","getValue") {
-			MEMBER("value", nil);
-		};
-
-		PUBLIC FUNCTION("","getDistance") {
-			MEMBER("distance", nil);
-		};
-
-		PUBLIC FUNCTION("","getOwner") {
-			MEMBER("owner", nil);
-		};
-
-		PUBLIC FUNCTION("","getDamage") {
-			MEMBER("damage", nil);
-		};
-
-		PUBLIC FUNCTION("scalar","setTimeToLive") {
-			MEMBER("timetolive", _this);
-		};
-
-		PUBLIC FUNCTION("object","setObject") {
-			MEMBER("object", _this);
-		};
-
-		PUBLIC FUNCTION("string","setName") {
-			MEMBER("name", _this);
-		};
-
-		PUBLIC FUNCTION("string","setOwner") {
-			MEMBER("owner", _this);
-		};
-
-		PUBLIC FUNCTION("scalar","setDistance") {
-			MEMBER("distance", _this);
-		};
-
-		PUBLIC FUNCTION("scalar", "setDamage") {
-			MEMBER("damage", _this);
-		};
-
-
-		PUBLIC FUNCTION("string", "setSource") {
-			MEMBER("source", _this);
-		};
-
-		PUBLIC FUNCTION("string", "setTarget") {
-			MEMBER("target", _this);
-		};
-
-		PUBLIC FUNCTION("code", "setPayLoad") {
-			MEMBER("payload", _this);
-		};
-
-
+		PUBLIC FUNCTION("","getObject") FUNC_GETVAR ("object");
+		PUBLIC FUNCTION("","getName") FUNC_GETVAR ("name"); 
+		PUBLIC FUNCTION("","getTimeToLive")FUNC_GETVAR ("timetolive");
+		PUBLIC FUNCTION("","getValue")FUNC_GETVAR("value");
+		PUBLIC FUNCTION("","getDistance") FUNC_GETVAR("distance"); 
+		PUBLIC FUNCTION("","getOwner")FUNC_GETVAR("owner");
+		PUBLIC FUNCTION("","getDamage") FUNC_GETVAR("damage");
+		PUBLIC FUNCTION("scalar","setTimeToLive") { MEMBER("timetolive", _this); };
+		PUBLIC FUNCTION("object","setObject") { MEMBER("object", _this); };
+		PUBLIC FUNCTION("string","setName") { MEMBER("name", _this); };
+		PUBLIC FUNCTION("string","setOwner") { MEMBER("owner", _this); };
+		PUBLIC FUNCTION("scalar","setDistance") { MEMBER("distance", _this); };
+		PUBLIC FUNCTION("scalar", "setDamage") { MEMBER("damage", _this); };
+		PUBLIC FUNCTION("string", "setSource") { MEMBER("source", _this); };
+		PUBLIC FUNCTION("string", "setTarget") { MEMBER("target", _this); };
+		PUBLIC FUNCTION("code", "setPayLoad") { MEMBER("payload", _this); };
 
 		/*
 			_this select 0 : max value
 			_this select 1: function to call
 		*/
 		PUBLIC FUNCTION("array", "triggerAtValue") {
-			private ["_max", "_current", "_scale"];
-
-			_max = param [0, 0, [0]];
-			_function = param [1, "", [{}]];
-
-			_current = 0;
+			DEBUG(#, "OO_MARKER::triggerAtValue")
+			private _max = param [0, 0, [0]];
+			private _function = param [1, "", [{}]];
+			private _current = 0;
 
 			while { _current < _max } do {
 				_current = MEMBER("value", _nil);
@@ -138,12 +87,10 @@
 			_this select 1: max value
 		*/
 		PUBLIC FUNCTION("array", "increaseValueByTime") {
-			private ["_max", "_current", "_scale"];
-
-			_scale = param [0, 1, [0]];
-			_max = param [1, 0, [0]];
-
-			_current = 0;
+			DEBUG(#, "OO_MARKER::increaseValueByTime")
+			private _scale = param [0, 1, [0]];
+			private _max = param [1, 0, [0]];
+			private _current = 0;
 
 			while { _current < _max } do {
 				_current = _current + 1;
@@ -158,14 +105,12 @@
 			_this select 1: scale
 		*/
 		PUBLIC FUNCTION("array", "increaseValueByDistance") {
-			private ["_current", "_max", "_lastpos", "_object", "_bonus"];
-		
-			_max = param [0, 0, [0]];
-			_scale = param [1, 1, [0]];
-			_current = 0;
-
-			_object = MEMBER("object", nil);
-			_initialpos = getpos _object;
+			DEBUG(#, "OO_MARKER::increaseValueByDistance")
+			private _max = param [0, 0, [0]];
+			private _scale = param [1, 1, [0]];
+			private _current = 0;
+			private _object = MEMBER("object", nil);
+			private _initialpos = getpos _object;
 
 			while { _current < _max } do {
 				_current = round(_initialpos distance (position _object)) * _scale;
@@ -175,6 +120,7 @@
 		};
 
 		PUBLIC FUNCTION("","deconstructor") { 
+			DEBUG(#, "OO_MARKER::deconstructor")
 			DELETE_VARIABLE("myobject");
 			DELETE_VARIABLE("name");
 			DELETE_VARIABLE("timetolive");
