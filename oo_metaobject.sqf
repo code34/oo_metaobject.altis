@@ -33,7 +33,7 @@
 		PRIVATE VARIABLE("code","payload");
 
 		PUBLIC FUNCTION("object","constructor") { 
-			DEBUG(#, "OO_MARKER::constructor")
+			DEBUG(#, "OO_METAOBJECT::constructor")
 			MEMBER("setObject", _this);
 			MEMBER("value", 0);
 			MEMBER("timetolive", -1);
@@ -67,7 +67,7 @@
 			_this select 1: function to call
 		*/
 		PUBLIC FUNCTION("array", "triggerAtValue") {
-			DEBUG(#, "OO_MARKER::triggerAtValue")
+			DEBUG(#, "OO_METAOBJECT::triggerAtValue")
 			private _max = param [0, 0, [0]];
 			private _function = param [1, "", [{}]];
 			private _current = 0;
@@ -87,7 +87,7 @@
 			_this select 1: max value
 		*/
 		PUBLIC FUNCTION("array", "increaseValueByTime") {
-			DEBUG(#, "OO_MARKER::increaseValueByTime")
+			DEBUG(#, "OO_METAOBJECT::increaseValueByTime")
 			private _scale = param [0, 1, [0]];
 			private _max = param [1, 0, [0]];
 			private _current = 0;
@@ -105,7 +105,7 @@
 			_this select 1: scale
 		*/
 		PUBLIC FUNCTION("array", "increaseValueByDistance") {
-			DEBUG(#, "OO_MARKER::increaseValueByDistance")
+			DEBUG(#, "OO_METAOBJECT::increaseValueByDistance")
 			private _max = param [0, 0, [0]];
 			private _scale = param [1, 1, [0]];
 			private _current = 0;
@@ -120,7 +120,7 @@
 		};
 
 		PUBLIC FUNCTION("","deconstructor") { 
-			DEBUG(#, "OO_MARKER::deconstructor")
+			DEBUG(#, "OO_METAOBJECT::deconstructor")
 			DELETE_VARIABLE("myobject");
 			DELETE_VARIABLE("name");
 			DELETE_VARIABLE("timetolive");
